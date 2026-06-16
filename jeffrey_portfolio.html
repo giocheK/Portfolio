@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jeffrey — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --navy:   #0A1628;
+    --navy2:  #0F1E38;
+    --sand:   #E8D5B0;
+    --amber:  #F5A623;
+    --amber2: #D4870A;
+    --white:  #F9F6F0;
+    --slate:  #4A6080;
+    --slate2: #8AA0BC;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'Space Mono', monospace;
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 6vw;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.15);
+  }
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--slate2);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+
+  /* ── GEOMETRIC DIVIDER (signature element) ── */
+  .geo-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    height: 28px;
+  }
+  .geo-divider svg { display: block; }
+
+  /* ── SECTION BASE ── */
+  section {
+    min-height: 100vh;
+    padding: 120px 6vw 80px;
+    position: relative;
+  }
+  section:nth-child(even) { background: var(--navy2); }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--amber);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+  .accent { color: var(--amber); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-pattern {
+    position: absolute;
+    right: -80px; top: 50%;
+    transform: translateY(-50%);
+    width: min(520px, 55vw);
+    opacity: 0.07;
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--amber);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 2px;
+    background: var(--amber);
+  }
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .hero-name span { color: var(--amber); }
+  .hero-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 300;
+    color: var(--slate2);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-primary {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--amber);
+    border: none;
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); }
+  .btn-outline {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    color: var(--slate2);
+    background: transparent;
+    border: 1px solid var(--slate);
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-outline:hover { color: var(--amber); border-color: var(--amber); }
+  .hero-location {
+    position: absolute;
+    bottom: 2.5rem; right: 6vw;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--slate);
+    letter-spacing: 0.12em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .hero-location::before {
+    content: '◈';
+    color: var(--amber);
+    font-size: 0.8rem;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+  }
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--slate2);
+    margin-bottom: 1.2rem;
+  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .stat-card {
+    border: 1px solid rgba(245,166,35,0.2);
+    padding: 1.4rem 1.2rem;
+    background: rgba(245,166,35,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--amber);
+  }
+  .stat-num {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--slate2);
+    letter-spacing: 0.05em;
+  }
+  .about-portrait {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .portrait-box {
+    background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(10,22,40,0) 60%);
+    border: 1px solid rgba(245,166,35,0.25);
+    padding: 2.5rem;
+    position: relative;
+  }
+  .portrait-initials {
+    font-family: var(--font-display);
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--amber);
+    opacity: 0.15;
+    line-height: 1;
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    pointer-events: none;
+  }
+  .portrait-quote {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.55;
+    position: relative;
+    z-index: 1;
+  }
+  .portrait-quote::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--amber);
+    line-height: 0;
+    vertical-align: -1rem;
+    margin-right: 0.2rem;
+    font-family: Georgia, serif;
+  }
+  .interest-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.3);
+    padding: 0.3rem 0.7rem;
+  }
+
+  /* ── SKILLS ── */
+  #skills { min-height: auto; padding-bottom: 100px; }
+  .skills-intro {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--slate2);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(138,160,188,0.15);
+    padding: 2rem;
+    transition: border-color 0.25s, background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card:hover {
+    border-color: rgba(245,166,35,0.4);
+    background: rgba(245,166,35,0.04);
+  }
+  .skill-card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .skill-card-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+  .skill-card-body {
+    font-size: 0.88rem;
+    color: var(--slate2);
+    line-height: 1.65;
+  }
+  .skill-bar-group { margin-top: 1.2rem; }
+  .skill-bar-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--slate2);
+    margin-bottom: 0.3rem;
+  }
+  .skill-bar {
+    height: 3px;
+    background: rgba(138,160,188,0.15);
+    margin-bottom: 0.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber2), var(--amber));
+    animation: fillBar 1.2s ease forwards;
+    transform-origin: left;
+  }
+  @keyframes fillBar {
+    from { width: 0; }
+    to { width: var(--w); }
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--navy2); }
+  .exp-intro {
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: var(--slate2);
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 6px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3.5rem;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 6px;
+    width: 10px; height: 10px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(245,166,35,0.2);
+  }
+  .timeline-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--amber);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .timeline-role {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-org {
+    font-size: 0.9rem;
+    color: var(--slate2);
+    margin-bottom: 1rem;
+  }
+  .timeline-desc {
+    font-size: 0.95rem;
+    color: var(--slate2);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+  .timeline-desc li {
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-desc li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--amber);
+    font-size: 0.8em;
+  }
+  /* learning section within experience */
+  .learning-box {
+    margin-top: 4rem;
+    border: 1px solid rgba(245,166,35,0.25);
+    padding: 2rem 2.5rem;
+    background: rgba(245,166,35,0.04);
+    max-width: 720px;
+  }
+  .learning-box-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.04em;
+  }
+  .learning-box p {
+    font-size: 0.95rem;
+    color: var(--slate2);
+    line-height: 1.7;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    min-height: auto;
+    padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: start;
+    margin-top: 2rem;
+  }
+  .contact-blurb {
+    font-size: 1.05rem;
+    color: var(--slate2);
+    line-height: 1.8;
+  }
+  .contact-blurb strong { color: var(--white); }
+  .contact-details { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--slate2);
+    letter-spacing: 0.05em;
+  }
+  .contact-row-icon {
+    width: 36px; height: 36px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+  .form-input, .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(138,160,188,0.2);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--amber);
+  }
+  .form-textarea { min-height: 120px; }
+  .form-note {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--slate);
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-top: 0.2rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(245,166,35,0.12);
+    padding: 2rem 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--slate);
+    letter-spacing: 0.1em;
+  }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: var(--slate);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #about, .contact-grid {
+      grid-template-columns: 1fr;
+    }
+    .about-portrait { order: -1; }
+    .portrait-box { padding: 1.5rem; }
+    .nav-links { display: none; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">JK.portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ══ PAGE 1: HERO ══ -->
+<section id="hero">
+  <!-- Background geometric pattern (Maasai-inspired triangles) -->
+  <svg class="hero-bg-pattern" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <g fill="#F5A623">
+      <!-- Repeated triangle grid -->
+      <polygon points="250,0 300,86 200,86"/>
+      <polygon points="350,0 400,86 300,86"/>
+      <polygon points="150,0 200,86 100,86"/>
+      <polygon points="450,0 500,86 400,86"/>
+      <polygon points="50,0 100,86 0,86"/>
+      <polygon points="200,86 250,172 150,172"/>
+      <polygon points="300,86 350,172 250,172"/>
+      <polygon points="400,86 450,172 350,172"/>
+      <polygon points="100,86 150,172 50,172"/>
+      <polygon points="0,86 50,172 -50,172"/>
+      <polygon points="500,86 550,172 450,172"/>
+      <polygon points="250,172 300,258 200,258"/>
+      <polygon points="150,172 200,258 100,258"/>
+      <polygon points="350,172 400,258 300,258"/>
+      <polygon points="450,172 500,258 400,258"/>
+      <polygon points="50,172 100,258 0,258"/>
+      <polygon points="200,258 250,344 150,344"/>
+      <polygon points="300,258 350,344 250,344"/>
+      <polygon points="100,258 150,344 50,344"/>
+      <polygon points="400,258 450,344 350,344"/>
+      <polygon points="250,344 300,430 200,430"/>
+      <polygon points="150,344 200,430 100,430"/>
+      <polygon points="350,344 400,430 300,430"/>
+      <polygon points="450,344 500,430 400,430"/>
+      <polygon points="200,430 250,516 150,516"/>
+      <polygon points="300,430 350,516 250,516"/>
+    </g>
+  </svg>
+
+  <div class="hero-tag">Based in Nairobi, Kenya</div>
+  <h1 class="hero-name">Jeffrey<br/><span>Komo</span></h1>
+  <p class="hero-tagline">HR Professional · Business IT Graduate · Financial Markets Learner</p>
+  <div class="hero-cta">
+    <a href="#about" class="btn-primary">Get to Know Me</a>
+    <a href="#contact" class="btn-outline">Let's Connect</a>
+  </div>
+  <div class="hero-location">Nairobi, Kenya</div>
+</section>
+
+<!-- DIVIDER -->
+<div class="geo-divider">
+  <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
+    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- ══ PAGE 2: ABOUT ══ -->
+<section id="about">
+  <div class="about-text reveal">
+    <div class="section-eyebrow">Who I Am</div>
+    <h2 class="section-title">Building at the<br/>intersection of<br/>people <span class="accent">&amp;</span> technology</h2>
+    <p>I'm a Nairobi-based professional with a <strong>Business IT degree</strong> and close to <strong>two years of hands-on HR experience</strong>. My background gives me a rare blend: I think systematically about processes and data, while staying people-centred in how I approach every challenge.</p>
+    <p>I'm currently exploring new directions — including <strong>financial markets and crypto trading</strong> — and I'm committed to continuous learning. I thrive in environments where analytical thinking meets human insight.</p>
+    <p>Whether it's streamlining a recruitment process, analysing data, or studying market charts, I bring the same disciplined curiosity to everything I do.</p>
+
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years HR Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">BSc</div>
+        <div class="stat-label">Business IT Degree</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">NBI</div>
+        <div class="stat-label">Nairobi, Kenya</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Always Learning</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-portrait reveal">
+    <div class="portrait-box">
+      <div class="portrait-initials">JM</div>
+      <p class="portrait-quote">I believe the best professionals never stop being curious — every new skill opens a door.</p>
+    </div>
+    <div class="interest-tags">
+      <span class="tag">Human Resources</span>
+      <span class="tag">Business IT</span>
+      <span class="tag">Equities/Commodities Trading</span>
+      <span class="tag">Financial Markets</span>
+      <span class="tag">Data Analysis</span>
+      <span class="tag">People Management</span>
+      <span class="tag">Nairobi</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="geo-divider">
+  <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
+    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- ══ PAGE 3: SKILLS ══ -->
+<section id="skills">
+  <div class="section-eyebrow">What I Bring</div>
+  <h2 class="section-title">Skills &amp; <span class="accent">Capabilities</span></h2>
+  <p class="skills-intro">My skill set sits at the crossroads of people operations, information technology, and financial literacy — built through formal education, professional work, and self-driven learning.</p>
+
+  <div class="skills-grid">
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">👥</span>
+      <div class="skill-card-title">Human Resources</div>
+      <p class="skill-card-body">Recruitment, onboarding, employee relations, HR administration, and talent management — grounded in real-world experience supporting organisations and their people.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Recruitment & Onboarding</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:85%"></div></div>
+        <div class="skill-bar-row"><span>Employee Relations</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%"></div></div>
+        <div class="skill-bar-row"><span>HR Administration</span><span>82%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:82%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">💻</span>
+      <div class="skill-card-title">Business IT</div>
+      <p class="skill-card-body">A degree-level foundation in information systems, business processes, and technology — enabling me to bridge the gap between technical systems and business needs.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Information Systems</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%"></div></div>
+        <div class="skill-bar-row"><span>Business Process Analysis</span><span>75%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:75%"></div></div>
+        <div class="skill-bar-row"><span>MS Office Suite</span><span>88%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:88%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">📈</span>
+      <div class="skill-card-title">Financial Markets</div>
+      <p class="skill-card-body">Currently developing hands-on knowledge of crypto futures trading on Binance — studying leverage, margin modes, PnL calculations, liquidation pricing, and risk management frameworks.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Crypto Futures (Binance)</span><span>55%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:55%"></div></div>
+        <div class="skill-bar-row"><span>Risk & Margin Management</span><span>50%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:50%"></div></div>
+        <div class="skill-bar-row"><span>Technical Chart Reading</span><span>48%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:48%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">🧩</span>
+      <div class="skill-card-title">Analytical Thinking</div>
+      <p class="skill-card-body">Strong ability to break down complex problems into manageable parts — whether evaluating a candidate's fit, understanding a balance sheet, or sizing a trade position with defined risk.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Problem Decomposition</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:85%"></div></div>
+        <div class="skill-bar-row"><span>Data Interpretation</span><span>75%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:75%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">🤝</span>
+      <div class="skill-card-title">Communication & People Skills</div>
+      <p class="skill-card-body">Effective written and verbal communicator, with a naturally empathetic style built through HR work. Comfortable engaging with stakeholders at all levels — from candidates to senior management.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Interpersonal Communication</span><span>88%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:88%"></div></div>
+        <div class="skill-bar-row"><span>Stakeholder Engagement</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:80%"></div></div>
+      </div>
+    </div>
+
+    <div class="skill-card reveal">
+      <span class="skill-card-icon">🎯</span>
+      <div class="skill-card-title">Self-Directed Learning</div>
+      <p class="skill-card-body">A proven ability to pick up new disciplines independently — from navigating Binance's futures interface to building mental models of leverage and liquidation mechanics through deliberate practice.</p>
+      <div class="skill-bar-group">
+        <div class="skill-bar-row"><span>Research & Self-Study</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:90%"></div></div>
+        <div class="skill-bar-row"><span>Adaptability</span><span>87%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="--w:87%"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="geo-divider">
+  <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
+    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- ══ PAGE 4: EXPERIENCE ══ -->
+<section id="experience">
+  <div class="section-eyebrow">My Journey</div>
+  <h2 class="section-title">Experience &amp; <span class="accent">Background</span></h2>
+  <p class="exp-intro">A career path that blends formal education with professional HR practice and an ongoing pursuit of financial literacy — each chapter informing the next.</p>
+
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">2022 – 2024 · Nairobi, Kenya</div>
+      <div class="timeline-role">HR Professional</div>
+      <div class="timeline-org">Human Resources — Nairobi</div>
+      <ul class="timeline-desc">
+        <li>Supported end-to-end recruitment processes: job advertising, screening, interviewing coordination, and onboarding new hires.</li>
+        <li>Maintained HR records and documentation in compliance with company policies.</li>
+        <li>Served as a point of contact for employee queries, fostering a positive and communicative workplace culture.</li>
+        <li>Assisted with HR administration including contracts, leave management, and performance tracking systems.</li>
+        <li>Collaborated with department heads to understand workforce needs and align hiring strategies accordingly.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">Graduated · Nairobi, Kenya</div>
+      <div class="timeline-role">Bachelor of Science — Business IT</div>
+      <div class="timeline-org">University · Kenya</div>
+      <ul class="timeline-desc">
+        <li>Studied the integration of information systems within business environments, covering databases, project management, and systems analysis.</li>
+        <li>Developed strong foundations in business process modelling, IT infrastructure, and organisational management.</li>
+        <li>Applied technology knowledge to real-world business challenges through coursework and practical assessments.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">2024 – Present · Independent</div>
+      <div class="timeline-role">Financial Markets Learner</div>
+      <div class="timeline-org">Self-Directed · Crypto Futures Trading</div>
+      <ul class="timeline-desc">
+        <li>Actively studying BTCUSDT perpetual futures trading on Binance, focusing on cross and isolated margin modes.</li>
+        <li>Building a rigorous understanding of leverage mechanics, PnL calculation, and liquidation price determination.</li>
+        <li>Applying a structured, risk-aware approach to account growth — prioritising capital preservation over aggressive short-term targets.</li>
+        <li>Developing example-driven mental models for position sizing and margin management.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="learning-box reveal">
+    <div class="learning-box-title">📚 Currently Focused On</div>
+    <p>Deepening my understanding of crypto futures trading — specifically the mathematics of leverage, margin, and liquidation on Binance. I approach financial markets the same way I approached HR: with discipline, process, and a genuine desire to understand the underlying mechanics before acting.</p>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="geo-divider">
+  <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
+    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- ══ PAGE 5: CONTACT ══ -->
+<section id="contact">
+  <div class="section-eyebrow">Get In Touch</div>
+  <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
+
+  <div class="contact-grid">
+    <div class="reveal">
+      <p class="contact-blurb">
+        Whether you're looking for a <strong>people-focused HR professional</strong>, someone who understands both business processes and IT systems, or simply want to exchange ideas about financial markets and trading — I'd love to hear from you.
+      </p>
+      <p class="contact-blurb" style="margin-top:1rem">
+        I'm <strong>open to new opportunities</strong> in HR, business operations, and related fields. Based in <strong>Nairobi, Kenya</strong> and available for both in-person and remote roles.
+      </p>
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-row-icon">📍</div>
+          Nairobi, Kenya
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">🎓</div>
+          BSc Business IT
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">💼</div>
+          2+ Years HR Experience
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">📈</div>
+          Financial Markets Enthusiast
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" type="text" placeholder="e.g. Jane Wanjiku"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" placeholder="jane@example.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input class="form-input" type="text" placeholder="Opportunity / Collaboration / Just saying hi"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me a bit about why you're reaching out…"></textarea>
+      </div>
+      <a href="#contact" class="btn-primary" style="text-align:center">Send Message</a>
+      <p class="form-note">Update this form with your email service to make it functional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Jeffrey Mwangi · Nairobi, Kenya</div>
+  <div class="footer-copy">© 2025 · Built with intent.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Stagger sibling reveals
+  document.querySelectorAll('.skills-grid, .timeline').forEach(parent => {
+    [...parent.querySelectorAll('.reveal')].forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.1}s`;
+    });
+  });
+</script>
+</body>
+</html>
