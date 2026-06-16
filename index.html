@@ -920,15 +920,16 @@
         <textarea class="form-textarea" placeholder="Tell me a bit about why you're reaching out…"></textarea>
       </div>
       <a href="#contact" class="btn-primary" style="text-align:center">Send Message</a>
-      <p class="form-note">Update this form with your email service to make it functional.</p>
+      /<p class="form-note">Update this form with your email service to make it functional.</p>/
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-name">Jeffrey Mwangi · Nairobi, Kenya</div>
-  <div class="footer-copy">© 2025 · Built with intent.</div>
+  <div class="footer-name">Jeffrey Komo · Nairobi, Kenya</div>
+
+  <div class="footer-copy"> © <span id="yr"></span> · Built with intent.</div>
 </footer>
 
 <script>
@@ -949,6 +950,7 @@
     [...parent.querySelectorAll('.reveal')].forEach((el, i) => {
       el.style.transitionDelay = `${i * 0.1}s`;
     });
+    document.getElementById('yr').textContent = new Date().getFullYear();
   });
 </script>
 </body>
