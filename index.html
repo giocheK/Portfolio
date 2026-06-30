@@ -8,14 +8,21 @@
 <style>
   /* ── TOKENS ── */
   :root {
-    --navy:   #0A1628;
-    --navy2:  #0F1E38;
-    --sand:   #E8D5B0;
-    --amber:  #F5A623;
-    --amber2: #D4870A;
-    --white:  #F9F6F0;
-    --slate:  #4A6080;
-    --slate2: #8AA0BC;
+    --navy:   #0B1419;
+    --navy2:  #111D24;
+    --sand:   #F5E6E0;
+    --teal:   #2DD4BF;
+    --teal2:  #0D9488;
+    --coral:  #FF7F6E;
+    --coral2: #E85D4A;
+    --white:  #F4F7F7;
+    --slate:  #3D5A66;
+    --slate2: #7BA3B0;
+    --navy-rgb:  11, 20, 25;
+    --teal-rgb:  45, 212, 191;
+    --slate2-rgb: 123, 163, 176;
+    --amber:  var(--teal);
+    --amber2: var(--teal2);
     --font-display: 'Space Grotesk', sans-serif;
     --font-body:    'Inter', sans-serif;
     --font-mono:    'Space Mono', monospace;
@@ -36,9 +43,9 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.2rem 6vw;
-    background: rgba(10,22,40,0.85);
+    background: rgba(var(--navy-rgb), 0.85);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(245,166,35,0.15);
+    border-bottom: 1px solid rgba(var(--teal-rgb), 0.15);
   }
   .nav-logo {
     font-family: var(--font-mono);
@@ -96,7 +103,7 @@
     line-height: 1.1;
     margin-bottom: 2rem;
   }
-  .accent { color: var(--amber); }
+  .accent { color: var(--coral); }
 
   /* ── HERO ── */
   #hero {
@@ -142,7 +149,7 @@
     color: var(--white);
     margin-bottom: 1.5rem;
   }
-  .hero-name span { color: var(--amber); }
+  .hero-name span { color: var(--coral); }
   .hero-tagline {
     font-family: var(--font-display);
     font-size: clamp(1rem, 2vw, 1.35rem);
@@ -228,9 +235,9 @@
     margin-top: 2.5rem;
   }
   .stat-card {
-    border: 1px solid rgba(245,166,35,0.2);
+    border: 1px solid rgba(var(--teal-rgb), 0.2);
     padding: 1.4rem 1.2rem;
-    background: rgba(245,166,35,0.04);
+    background: rgba(var(--teal-rgb), 0.04);
     position: relative;
     overflow: hidden;
   }
@@ -245,7 +252,7 @@
     font-family: var(--font-mono);
     font-size: 2rem;
     font-weight: 700;
-    color: var(--amber);
+    color: var(--coral);
     line-height: 1;
     margin-bottom: 0.4rem;
   }
@@ -260,8 +267,8 @@
     gap: 1rem;
   }
   .portrait-box {
-    background: linear-gradient(135deg, rgba(245,166,35,0.12) 0%, rgba(10,22,40,0) 60%);
-    border: 1px solid rgba(245,166,35,0.25);
+    background: linear-gradient(135deg, rgba(var(--teal-rgb), 0.12) 0%, rgba(var(--navy-rgb), 0) 60%);
+    border: 1px solid rgba(var(--teal-rgb), 0.25);
     padding: 2.5rem;
     position: relative;
   }
@@ -288,7 +295,7 @@
   .portrait-quote::before {
     content: '"';
     font-size: 4rem;
-    color: var(--amber);
+    color: var(--coral);
     line-height: 0;
     vertical-align: -1rem;
     margin-right: 0.2rem;
@@ -306,8 +313,8 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--amber);
-    background: rgba(245,166,35,0.1);
-    border: 1px solid rgba(245,166,35,0.3);
+    background: rgba(var(--teal-rgb), 0.1);
+    border: 1px solid rgba(var(--teal-rgb), 0.3);
     padding: 0.3rem 0.7rem;
   }
 
@@ -327,15 +334,15 @@
   }
   .skill-card {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(138,160,188,0.15);
+    border: 1px solid rgba(var(--slate2-rgb), 0.15);
     padding: 2rem;
     transition: border-color 0.25s, background 0.25s;
     position: relative;
     overflow: hidden;
   }
   .skill-card:hover {
-    border-color: rgba(245,166,35,0.4);
-    background: rgba(245,166,35,0.04);
+    border-color: rgba(var(--teal-rgb), 0.4);
+    background: rgba(var(--teal-rgb), 0.04);
   }
   .skill-card-icon {
     font-size: 1.8rem;
@@ -365,7 +372,7 @@
   }
   .skill-bar {
     height: 3px;
-    background: rgba(138,160,188,0.15);
+    background: rgba(var(--slate2-rgb), 0.15);
     margin-bottom: 0.8rem;
     position: relative;
     overflow: hidden;
@@ -413,7 +420,7 @@
     width: 10px; height: 10px;
     background: var(--amber);
     border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(245,166,35,0.2);
+    box-shadow: 0 0 0 3px rgba(var(--teal-rgb), 0.2);
   }
   .timeline-meta {
     font-family: var(--font-mono);
@@ -457,9 +464,9 @@
   /* learning section within experience */
   .learning-box {
     margin-top: 4rem;
-    border: 1px solid rgba(245,166,35,0.25);
+    border: 1px solid rgba(var(--teal-rgb), 0.25);
     padding: 2rem 2.5rem;
-    background: rgba(245,166,35,0.04);
+    background: rgba(var(--teal-rgb), 0.04);
     max-width: 720px;
   }
   .learning-box-title {
@@ -509,8 +516,8 @@
   }
   .contact-row-icon {
     width: 36px; height: 36px;
-    background: rgba(245,166,35,0.1);
-    border: 1px solid rgba(245,166,35,0.25);
+    background: rgba(var(--teal-rgb), 0.1);
+    border: 1px solid rgba(var(--teal-rgb), 0.25);
     display: flex; align-items: center; justify-content: center;
     font-size: 1rem;
     flex-shrink: 0;
@@ -526,7 +533,7 @@
   }
   .form-input, .form-textarea {
     background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(138,160,188,0.2);
+    border: 1px solid rgba(var(--slate2-rgb), 0.2);
     color: var(--white);
     font-family: var(--font-body);
     font-size: 0.95rem;
@@ -551,7 +558,7 @@
   /* ── FOOTER ── */
   footer {
     background: var(--navy);
-    border-top: 1px solid rgba(245,166,35,0.12);
+    border-top: 1px solid rgba(var(--teal-rgb), 0.12);
     padding: 2rem 6vw;
     display: flex;
     justify-content: space-between;
@@ -610,7 +617,7 @@
 <section id="hero">
   <!-- Background geometric pattern (Maasai-inspired triangles) -->
   <svg class="hero-bg-pattern" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" fill="none">
-    <g fill="#F5A623">
+    <g fill="#2DD4BF">
       <!-- Repeated triangle grid -->
       <polygon points="250,0 300,86 200,86"/>
       <polygon points="350,0 400,86 300,86"/>
@@ -654,7 +661,7 @@
 <!-- DIVIDER -->
 <div class="geo-divider">
   <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
-    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#2DD4BF" stroke-width="1.5" opacity="0.4"/>
   </svg>
 </div>
 
@@ -707,7 +714,7 @@
 <!-- DIVIDER -->
 <div class="geo-divider">
   <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
-    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#2DD4BF" stroke-width="1.5" opacity="0.4"/>
   </svg>
 </div>
 
@@ -803,7 +810,7 @@
 <!-- DIVIDER -->
 <div class="geo-divider">
   <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
-    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+    <polyline points="0,28 60,0 120,28 180,0 240,28 300,0 360,28 420,0 480,28 540,0 600,28 660,0 720,28 780,0 840,28 900,0 960,28 1020,0 1080,28 1140,0 1200,28 1260,0 1320,28 1380,0 1440,28" fill="none" stroke="#2DD4BF" stroke-width="1.5" opacity="0.4"/>
   </svg>
 </div>
 
@@ -865,7 +872,7 @@
 <!-- DIVIDER -->
 <div class="geo-divider">
   <svg viewBox="0 0 1440 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" width="100%" height="28">
-    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#F5A623" stroke-width="1.5" opacity="0.4"/>
+    <polyline points="0,0 60,28 120,0 180,28 240,0 300,28 360,0 420,28 480,0 540,28 600,0 660,28 720,0 780,28 840,0 900,28 960,0 1020,28 1080,0 1140,28 1200,0 1260,28 1320,0 1380,28 1440,0" fill="none" stroke="#2DD4BF" stroke-width="1.5" opacity="0.4"/>
   </svg>
 </div>
 
